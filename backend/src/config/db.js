@@ -9,19 +9,19 @@ const connectDB = async () => {
     );
   }
 
-  // Log host only (no credentials) — helps confirm env is loaded on Render
-  try {
-    const host = new URL(mongoUri.replace(/^mongodb(\+srv)?:\/\//, "https://")).host;
+  const hostMatch = mongoUri.match(/@([^/?]+)/);
+  if (hostMatch) {
     // eslint-disable-next-line no-console
-    console.log(`Connecting to MongoDB host: ${host}`);
-  } catch {
+    console.log(`Connecting to MongoDB host: ${hostMatch[1]}`);
+  } else {
     // eslint-disable-next-line no-console
-    console.log("MONGO_URI set; could not parse host for logging.");
+    console.log("MONGO_URI is set (host not logged).");
   }
 
   try {
     await mongoose.connect(mongoUri, {
-      serverSelectionTimeoutMS: 15000,
+      serverSelectionTimeoutMS: 20000,
+      family: 4,
     });
   } catch (err) {
     throw new Error(
