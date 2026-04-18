@@ -1,6 +1,7 @@
 services:
   - type: web
     name: whisperbox-backend
+    plan: free
     runtime: node
     rootDir: backend
     buildCommand: npm install
