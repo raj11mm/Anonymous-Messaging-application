@@ -79,6 +79,13 @@ app.use((req, _res, next) => {
   next();
 });
 
+app.get("/", (_req, res) => {
+  res.status(200).json({
+    name: "WhisperBox API",
+    health: "/api/health",
+  });
+});
+
 app.get("/api/health", (_req, res) => {
   res.status(200).json({ status: "ok" });
 });
