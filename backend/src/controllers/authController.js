@@ -55,6 +55,8 @@ const register = async (req, res) => {
       },
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error("Register failed:", error.message);
     return res.status(500).json({ message: "Failed to register user." });
   }
 };
@@ -90,6 +92,8 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error("Login failed:", error.message);
     return res.status(500).json({ message: "Failed to login user." });
   }
 };

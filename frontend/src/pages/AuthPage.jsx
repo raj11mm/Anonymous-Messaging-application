@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import api from "../api/client";
+import api, { apiBaseUrl, isApiBaseUrlConfigured } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 
 export default function AuthPage() {
@@ -29,7 +29,15 @@ export default function AuthPage() {
       toast.success(`${mode === "login" ? "Welcome back" : "Account created"} successfully.`);
       navigate("/dashboard");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Authentication failed.");
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else if (!isApiBaseUrlConfigured && import.meta.env.PROD) {
+        toast.error("Backend API is not configured. Set VITE_API_BASE_URL in Vercel.");
+      } else if (!error.response) {
+        toast.error(`Cannot reach backend API at ${apiBaseUrl}. Check API URL and CORS.`);
+      } else {
+        toast.error("Authentication failed.");
+      }
     } finally {
       setLoading(false);
     }

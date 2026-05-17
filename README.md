@@ -88,6 +88,12 @@ CLIENT_URL=http://localhost:5173
 VITE_API_BASE_URL=http://localhost:5000/api
 ```
 
+For the deployed Render backend, use:
+
+```env
+VITE_API_BASE_URL=https://whisperbox-backend-dz8e.onrender.com/api
+```
+
 ## API Endpoints
 
 - `POST /api/auth/register`
@@ -105,7 +111,7 @@ VITE_API_BASE_URL=http://localhost:5000/api
 - Root directory: `frontend`
 - Build command: `npm run build`
 - Output directory: `dist`
-- Env var: `VITE_API_BASE_URL=<your-render-backend-url>/api`
+- Env var: `VITE_API_BASE_URL=https://whisperbox-backend-dz8e.onrender.com/api`
 
 ### Backend (Render)
 

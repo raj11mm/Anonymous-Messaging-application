@@ -17,14 +17,20 @@ const globalLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-const allowedOrigins = (
-  process.env.CLIENT_URLS ||
-  process.env.CLIENT_URL ||
-  "http://localhost:5173,http://127.0.0.1:5173"
-)
+const defaultAllowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://anonymous-messaging-application.vercel.app",
+];
+
+const configuredAllowedOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || "")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
+
+const allowedOrigins = Array.from(
+  new Set([...defaultAllowedOrigins, ...configuredAllowedOrigins])
+);
 
 const isAllowedDevOrigin = (origin) =>
   /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin) ||
